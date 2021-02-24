@@ -1,4 +1,6 @@
 const axios = require("axios");
+const fs = require("fs");
+const logger = require("../utils/logger");
 
 /**
  * video downloand and save in path
@@ -12,6 +14,8 @@ module.exports = async function video_download(path, url, title) {
         url: url,
         responseType: 'stream'
     })
+
+    console.log(response)
 
     response.data.pipe(fs.createWriteStream(path))
     return new Promise((resolve, reject) => {

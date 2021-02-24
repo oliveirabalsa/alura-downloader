@@ -8,7 +8,7 @@ const httpRequest = require('../services/httpRequest')
  */
 module.exports = async function get_video(id, slug, token) {
     let res = await httpRequest({
-        url: `https://cursos.alura.com.br/mobile/courses/${slug}/busca-video-${id}`,
+        url: `https://cursos.alura.com.br/course/${slug}/task/${id}/video`,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'User-Agent': 'alura-mobi/android',
@@ -18,9 +18,8 @@ module.exports = async function get_video(id, slug, token) {
         }
     });
 
-   console.log(res.response.toJSON()); 
+   const video = JSON.parse(res.body).find(item => item.quality === "hd")
 
-    let [hd, sd] = JSON.parse(res.body);
-    return hd.link;
+    return video.link;
 
 }
